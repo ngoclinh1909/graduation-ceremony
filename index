@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graduation Invitation - Nguyen Ngoc Linh</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #7b1111, #3a0a0a 80%);
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 100px;
+    }
+
+    .invitation-card {
+      max-width: 600px;
+      margin: 100px auto;
+      padding: 25px;
+      background: #fff;
+      color: #4a1a1a;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      animation: fadeInUp 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInUp {
+      0% { transform: translateY(50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .invitation-card img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.5s ease;
+    }
+
+    .invitation-card img:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 46px;
+      margin-top: 20px;
+      color: #7b1111;
+      opacity: 0;
+      animation: fadeText 2s ease forwards 1s;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin: 10px 0;
+      color: #4a1a1a;
+      opacity: 0;
+      animation: fadeText 2s ease forwards 2s;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    .details {
+      margin-top: 25px;
+      padding: 15px;
+      border-top: 2px solid #7b1111;
+      font-size: 17px;
+      opacity: 0;
+      animation: fadeText 2s ease forwards 3s;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 28px;
+      font-size: 18px;
+      color: white;
+      background: linear-gradient(45deg, #7b1111, #b85a1d);
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(123, 17, 17, 0.5);
+      opacity: 0;
+      animation: fadeText 2s ease forwards 4s;
+    }
+
+    .button:hover {
+      background: linear-gradient(45deg, #b85a1d, #7b1111);
+      transform: translateY(-3px);
+    }
+
+    @keyframes fadeText {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #eee;
+      margin: 40px 0;
+      opacity: 0.8;
+      animation: fadeText 2s ease forwards 5s;
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9a923b5f60.mp3?filename=inspiring-ambient-11254.mp3" type="audio/mpeg">
+  </audio>
+
+  <canvas id="fireworks"></canvas>
+
+  <div class="content">
+    <div class="invitation-card">
+      <img src="Graduation Invitation.png" alt="Graduation Invitation">
+      <h1>Graduation Ceremony 2025</h1>
+      <h2>Nguyen Ngoc Linh</h2>
+      <p><strong>Friday, 17 Oct 2025</strong></p>
+      <p>03:00 PM – 06:00 PM</p>
+      <div class="details">
+        <p><strong>Venue:</strong> C2 – Hanoi University of Science and Technology</p>
+        <p><strong>Contact:</strong> 0911553468</p>
+      </div>
+      <a class="button" href="https://maps.app.goo.gl/PX898CY1WndvuC3S6" target="_blank">View Location</a>
+    </div>
+
+    <div class="invitation-card">
+      <h2>🎉 Let’s Celebrate Together!</h2>
+      <p>Join with me in this special day!</p>
+      <p>❤️ I can’t wait to see you there! ❤️</p>
+    </div>
+
+    <footer>
+      Designed with ❤️ for the Graduation of Nguyen Ngoc Linh – 2025
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function createParticle() {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 4 + 2;
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: canvas.height,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed * -1.2,
+        size: Math.random() * 3 + 1,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+        life: 100
+      });
+    }
+
+    function updateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.life--;
+        if (p.life <= 0) particles.splice(i, 1);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+    }
+
+    setInterval(() => { for (let i = 0; i < 10; i++) createParticle(); }, 300);
+
+    function animate() { updateParticles(); requestAnimationFrame(animate); }
+    animate();
+  </script>
+</body>
+</html>
